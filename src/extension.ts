@@ -15,13 +15,20 @@ export function activate(context: vscode.ExtensionContext): void {
 	let disposable = vscode.commands.registerCommand('path-and-line.invoke', function (): void {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		const line = vscode.window.activeTextEditor?.selection.start.line;
+		const selection = vscode.window.activeTextEditor?.selection;
 		const name = vscode.workspace.asRelativePath(vscode.window.activeTextEditor?.document.fileName || "");
-		if (line === undefined) {
+		if (selection === undefined) {
 			return;
 		}
 
-		vscode.env.clipboard.writeText(`${name}:${line + 1}`);
+		const startLine = selection.start.line + 1;
+		const endLine = selection.end.line + 1;
+
+		if (startLine === endLine) {
+			vscode.env.clipboard.writeText(`${name}:${startLine}`);
+		} else {
+			vscode.env.clipboard.writeText(`${name}:${startLine}-${endLine}`);
+		}
 	});
 
 	context.subscriptions.push(disposable);
