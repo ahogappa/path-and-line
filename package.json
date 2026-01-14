@@ -6,7 +6,7 @@
   "publisher": "ahogappa",
   "displayName": "copy source location",
   "description": "copy source location",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "engines": {
     "vscode": "^1.53.0"
   },
